@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Map | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="hospital-map-page">
+
+    <nav class="navbar">
+        <div class="logo">HealthBridge<span>+</span></div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/#login">Portals</a>
+        </div>
+    </nav>
+
+    <main class="map-container">
+
+        <div class="map-heading">
+            <span>HOSPITAL DIRECTORY</span>
+            <h1>Find Your Way Around</h1>
+            <p>Explore important departments and facilities at HealthBridge Hospital.</p>
+        </div>
+
+        <div class="map-notice">
+            <span>ℹ️</span>
+            <p>Select the department you need and check its location inside the hospital.</p>
+        </div>
+
+        <div class="map-grid">
+
+            <div class="department emergency">
+                <div class="department-icon">🚑</div>
+                <span class="department-label">PRIORITY CARE</span>
+                <h3>Emergency</h3>
+                <p>Ground Floor</p>
+            </div>
+
+            <div class="department">
+                <div class="department-icon">🏥</div>
+                <h3>Reception & Help Centre</h3>
+                <p>Main Entrance</p>
+            </div>
+
+            <div class="department">
+                <div class="department-icon">💊</div>
+                <h3>Pharmacy</h3>
+                <p>Ground Floor</p>
+            </div>
+
+            <div class="department">
+                <div class="department-icon">🩺</div>
+                <h3>Nursing Station</h3>
+                <p>First Floor</p>
+            </div>
+
+            <div class="department">
+                <div class="department-icon">🧪</div>
+                <h3>Laboratory</h3>
+                <p>First Floor</p>
+            </div>
+
+            <div class="department">
+                <div class="department-icon">🩻</div>
+                <h3>X-Ray Department</h3>
+                <p>First Floor</p>
+            </div>
+
+            <div class="department">
+                <div class="department-icon">🚗</div>
+                <h3>Parking</h3>
+                <p>Outside Main Building</p>
+            </div>
+
+        </div>
+
+        <div class="map-footer">
+            <a href="/" class="btn">← Back to Home</a>
+            <p>Need assistance? Visit the Reception & Help Centre.</p>
+        </div>
+
+    </main>
+
+</body>
+</html>

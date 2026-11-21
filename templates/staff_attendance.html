@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Attendance | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/staff-dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">STAFF PORTAL</p>
+            <h1>My Attendance</h1>
+            <p>Record and view your daily attendance.</p>
+        </div>
+        <div class="dashboard-icon">🕒</div>
+    </div>
+
+    <div class="attendance-card">
+
+        <div class="attendance-date">
+            <span>Today's Date</span>
+            <h2>{{ today }}</h2>
+        </div>
+
+        {% if attendance %}
+
+            <div class="attendance-success-icon">✓</div>
+            <h2 class="attendance-success-title">Attendance Marked!</h2>
+            <p class="attendance-description">
+                Your attendance has been recorded successfully.
+            </p>
+
+            <div class="attendance-details">
+                <div>
+                    <span>Check-in Time</span>
+                    <strong>{{ attendance['check_in'] }}</strong>
+                </div>
+
+                <div>
+                    <span>Attendance Status</span>
+                    <strong>{{ attendance['status'] }}</strong>
+                </div>
+            </div>
+
+        {% else %}
+
+            <div class="attendance-pending-icon">🕒</div>
+            <h2 class="attendance-pending-title">Attendance Not Marked</h2>
+            <p class="attendance-description">
+                Please mark your attendance for today.
+            </p>
+
+            <form method="POST">
+                <button type="submit" class="login-btn">
+                    Mark Present
+                </button>
+            </form>
+
+        {% endif %}
+
+    </div>
+
+    <div class="page-back-link">
+        <a href="/staff-dashboard">← Back to Dashboard</a>
+    </div>
+
+</section>
+
+</body>
+</html>

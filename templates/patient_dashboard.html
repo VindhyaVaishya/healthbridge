@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/hospital-map">Hospital Map</a>
+        <a href="/logout">Logout ↗</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">PATIENT WORKSPACE</p>
+            <h1>Welcome, {{ patient['name'] }}!</h1>
+            <p>Your personal healthcare dashboard is ready.</p>
+        </div>
+        <div class="dashboard-icon">💛</div>
+    </div>
+
+    <div class="patient-id-card">
+        <div>
+            <span>YOUR HEALTHBRIDGE PATIENT ID</span>
+            <h2>{{ patient['patient_id'] }}</h2>
+        </div>
+        <div class="patient-id-icon">🪪</div>
+    </div>
+
+    <div class="dashboard-heading">
+        <h2>Your Healthcare</h2>
+        <p>Manage your appointments and personal details</p>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-card">
+            <div class="feature-icon">👤</div>
+            <h3>My Profile</h3>
+            <p>Mobile: {{ patient['mobile'] }}</p>
+            <p>Email: {{ patient['email'] or 'Not provided' }}</p>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="feature-icon">📅</div>
+            <h3>Book Appointment</h3>
+            <p>Find your preferred doctor and choose an available time slot.</p>
+            <a href="/book-appointment">Book Appointment →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="feature-icon">📋</div>
+            <h3>My Appointments</h3>
+            <p>View your booked appointments, doctor details and token numbers.</p>
+            <a href="/my-appointments">View Appointments →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="feature-icon">🏥</div>
+            <h3>Hospital Map</h3>
+            <p>Explore hospital departments and important facilities.</p>
+            <a href="/hospital-map">Explore Hospital →</a>
+        </div>
+
+
+        <div class="dashboard-card">
+            <div class="feature-icon">🧾</div>
+            <h3>My Bills</h3>
+            <p>View your hospital bills and download payment records.</p>
+            <a href="/my-bills">View My Bills →</a>
+        </div>
+
+
+    </div>
+
+    <div class="staff-footer">
+        <p>HealthBridge · Your Health, Our Priority</p>
+    </div>
+
+</section>
+
+</body>
+</html>

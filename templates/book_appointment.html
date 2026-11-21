@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<section class="login-container">
+    <div class="login-box appointment-box">
+
+        <div class="login-icon">📅</div>
+
+        <h2>Book Appointment</h2>
+        <p class="login-subtitle">
+            Schedule your visit with our doctors
+        </p>
+
+        <div class="login-divider"></div>
+
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" action="/book-appointment">
+
+            <label>Select Doctor</label>
+            <select name="doctor_id" required>
+                <option value="">Choose your doctor</option>
+                {% for doctor in doctors %}
+                    <option value="{{ doctor['doctor_id'] }}">
+                        Dr. {{ doctor['full_name'] }} -
+                        {{ doctor['specialization'] }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label>Appointment Date</label>
+            <input
+                type="date"
+                name="appointment_date"
+                required>
+
+            <label>Available Time Slot</label>
+            <select name="appointment_time" required>
+                <option value="">Choose an available slot</option>
+                {% for slot in slots %}
+                    <option value="{{ slot['slot_time'] }}">
+                        {{ slot['slot_time'] }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <p class="slot-hint" id="slots-note">
+                Select a doctor and date to view available slots.
+            </p>
+
+            <button class="btn login-btn" type="submit">
+                Confirm Appointment →
+            </button>
+
+        </form>
+
+        <p class="back-home">
+            <a href="/patient-dashboard">← Back to Dashboard</a>
+        </p>
+
+        <p class="login-footer">
+            HealthBridge · Your Health, Our Priority
+        </p>
+
+    </div>
+</section>
+
+<script>
+const doctorSelect = document.querySelector(
+    'select[name="doctor_id"]'
+);
+
+const dateInput = document.querySelector(
+    'input[name="appointment_date"]'
+);
+
+const timeSelect = document.querySelector(
+    'select[name="appointment_time"]'
+);
+
+const slotsNote = document.getElementById("slots-note");
+
+async function loadSlots() {
+    const doctorId = doctorSelect.value;
+    const selectedDate = dateInput.value;
+
+    timeSelect.innerHTML =
+        '<option value="">Choose an available slot</option>';
+
+    if (!doctorId || !selectedDate) {
+        slotsNote.textContent =
+            "Select a doctor and date to view available slots.";
+        return;
+    }
+
+    slotsNote.textContent = "Loading available slots...";
+
+    try {
+        const response = await fetch(
+            `/get-available-slots?doctor_id=${encodeURIComponent(doctorId)}&date=${encodeURIComponent(selectedDate)}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Unable to load slots");
+        }
+
+        const slots = await response.json();
+
+        if (slots.length === 0) {
+            timeSelect.innerHTML =
+                '<option value="">No slots available</option>';
+
+            slotsNote.textContent =
+                "No available slots for this date. Please choose another date.";
+            return;
+        }
+
+        slots.forEach(function(time) {
+            const option = document.createElement("option");
+            option.value = time;
+            option.textContent = time;
+            timeSelect.appendChild(option);
+        });
+
+        slotsNote.textContent =
+            slots.length + " available slot(s) found.";
+
+    } catch (error) {
+        slotsNote.textContent =
+            "Could not load slots. Please try again.";
+    }
+}
+
+doctorSelect.addEventListener("change", loadSlots);
+dateInput.addEventListener("change", loadSlots);
+</script>
+
+</body>
+</html>

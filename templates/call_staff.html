@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Staff | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/doctor-dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">DOCTOR PORTAL</p>
+            <h1>Staff Assistance</h1>
+            <p>Request support from hospital staff whenever needed.</p>
+        </div>
+        <div class="dashboard-icon">🛎️</div>
+    </div>
+
+    <div class="staff-request-layout">
+
+        <div class="staff-request-form-card">
+            <h2>Send a Staff Request</h2>
+            <p class="availability-description">
+                Choose the staff member you need and describe your request.
+            </p>
+
+            <form method="POST" action="/call-staff">
+
+                <label>Select Staff Role</label>
+                <select name="staff_role" required>
+                    <option value="">Choose Staff</option>
+                    <option value="Nurse">Nurse</option>
+                    <option value="Assistant">Assistant</option>
+                    <option value="Ward Boy">Ward Boy</option>
+                    <option value="Helper">Helper</option>
+                    <option value="Lab Technician">Lab Technician</option>
+                </select>
+
+                <label>Message</label>
+                <textarea name="message" rows="4"
+                    placeholder="Describe your request"></textarea>
+
+                <button type="submit" class="login-btn">
+                    Send Request →
+                </button>
+
+            </form>
+        </div>
+
+        <div class="staff-request-history">
+            <h2>My Requests</h2>
+            <p class="availability-description">
+                Review the requests you have sent.
+            </p>
+
+            {% for item in requests %}
+
+            <div class="staff-request-item">
+                <div class="request-item-top">
+                    <strong>{{ item['staff_role'] }}</strong>
+                    <span class="request-status">
+                        {{ item['status'] }}
+                    </span>
+                </div>
+
+                <p>{{ item['message'] }}</p>
+            </div>
+
+            {% else %}
+
+            <div class="empty-slots">
+                <div class="feature-icon">📨</div>
+                <h3>No Requests Yet</h3>
+                <p>Your staff requests will appear here.</p>
+            </div>
+
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <div class="page-back-link">
+        <a href="/doctor-dashboard">← Back to Dashboard</a>
+    </div>
+
+</section>
+
+</body>
+</html>

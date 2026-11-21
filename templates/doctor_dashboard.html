@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .recent-activities {
+            background: #FFF9E9;
+            border: 1px solid #E8C994;
+            border-radius: 15px;
+            padding: 22px;
+            margin: 25px 0;
+        }
+
+        .recent-activities h2 {
+            color: #765638;
+            margin-bottom: 5px;
+        }
+
+        .activity-subtitle {
+            color: #8B7355;
+            margin-bottom: 18px;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            margin-top: 10px;
+            background: #FFFFFF;
+            border: 1px solid #F0E2C5;
+            border-radius: 10px;
+        }
+
+        .activity-info strong {
+            color: #765638;
+            display: block;
+        }
+
+        .activity-info span,
+        .activity-date {
+            color: #8B7355;
+            font-size: 13px;
+        }
+
+        .activity-icon {
+            font-size: 23px;
+            margin-right: 10px;
+        }
+
+        .empty-activity {
+            color: #8B7355;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+        }
+
+/* APPOINTMENT MANAGEMENT */
+
+        .doctor-appointments {
+        background: #FFF9E9;
+        border: 1px solid #E8C994;
+        border-radius: 15px;
+        padding: 22px;
+        margin: 25px 0;
+        }
+
+        .doctor-appointments h2 {
+        color: #765638;
+        margin-bottom: 5px;
+        }
+
+        .doctor-appointment-card {
+        background: #FFFFFF;
+        border: 1px solid #F0E2C5;
+        border-radius: 12px;
+        padding: 18px;
+        margin-top: 15px;
+        }
+
+        .doctor-appointment-card h3 {
+        color: #765638;
+        margin-bottom: 8px;
+        }
+
+        .doctor-appointment-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 14px;
+        margin: 15px 0;
+        }
+
+        .doctor-appointment-details span {
+        display: block;
+        color: #8B7355;
+        font-size: 13px;
+        }
+
+        .doctor-appointment-details strong {
+        color: #765638;
+        }
+
+        .status-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-top: 12px;
+        }
+
+        .status-form select {
+        padding: 10px;
+        border: 1px solid #E8C994;
+        border-radius: 8px;
+        background: #FFF9E9;
+        color: #765638;
+        }
+
+        .status-form button {
+        padding: 10px 16px;
+        background: #D9A900;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        }
+
+        .no-doctor-appointments {
+        background: #FFFFFF;
+        padding: 18px;
+        border-radius: 10px;
+        color: #8B7355;
+        margin-top: 15px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/logout">Logout ↗</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">DOCTOR WORKSPACE</p>
+            <h1>Welcome back, Dr. {{ doctor['full_name'] }}!</h1>
+            <p>Manage your patients, appointments and daily activities.</p>
+        </div>
+        <div class="dashboard-icon">🩺</div>
+    </div>
+
+    <div class="doctor-profile">
+        <div class="profile-item">
+            <span>Doctor Name</span>
+            <strong>Dr. {{ doctor['full_name'] }}</strong>
+        </div>
+
+        <div class="profile-item">
+            <span>Specialization</span>
+            <strong>{{ doctor['specialization'] or 'Not selected' }}</strong>
+        </div>
+
+        <div class="profile-item">
+            <span>Doctor ID</span>
+            <strong>{{ doctor['doctor_id'] }}</strong>
+        </div>
+    </div>
+
+    <!-- RECENT ACTIVITIES -->
+    <div class="recent-activities">
+
+        <h2>🔔 Recent Activities</h2>
+        <p class="activity-subtitle">
+            Latest patient registrations at HealthBridge
+        </p>
+
+        {% if recent_patients %}
+
+            {% for patient in recent_patients %}
+            <div class="activity-item">
+
+                <div style="display:flex; align-items:center;">
+                    <div class="activity-icon">👤</div>
+
+                    <div class="activity-info">
+                        <strong>{{ patient['name'] }}</strong>
+                        <span>Patient ID: {{ patient['patient_id'] }}</span>
+                    </div>
+                </div>
+
+                <div class="activity-date">
+                    {{ patient['created_at'] }}
+                </div>
+
+            </div>
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-activity">
+                No recent patient registrations available.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="dashboard-heading">
+        <h2>Your Workspace</h2>
+        <p>Choose a section to continue</p>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-card">
+            <div class="feature-icon">🩺</div>
+            <h3>My Specialization</h3>
+            <p>View or update your medical specialization.</p>
+            <a href="/doctor-specialization">Manage Specialization →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="feature-icon">📅</div>
+            <h3>Manage Availability</h3>
+            <p>Add your available dates and appointment time slots.</p>
+            <a href="/manage-availability">Manage Slots →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="feature-icon">👥</div>
+            <h3>Today's Patients</h3>
+            <p>View your daily patient queue and token numbers.</p>
+            <a href="/today-patients">View Patients →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="feature-icon">🔄</div>
+            <h3>Revisit Patients</h3>
+            <p>Check patients who have visited you before.</p>
+            <a href="/revisit-patients">View Patients →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="feature-icon">📋</div>
+            <h3>Patient History</h3>
+            <p>View the list of patients associated with you.</p>
+            <a href="/patient-history">View History →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="feature-icon">🔔</div>
+            <h3>Call Staff</h3>
+            <p>Request assistance from hospital staff.</p>
+            <a href="/call-staff">Request Staff →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="feature-icon">🕒</div>
+            <h3>Attendance</h3>
+            <p>Mark and view your daily attendance.</p>
+            <a href="/doctor-attendance">Mark Attendance →</a>
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

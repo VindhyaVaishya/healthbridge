@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Confirmed | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<section class="login-container">
+    <div class="login-box success-box">
+
+        <div class="success-icon">✓</div>
+
+        <h2>Appointment Confirmed!</h2>
+
+        <p class="login-subtitle">
+            Your appointment has been successfully booked.
+        </p>
+
+        <div class="success-divider"></div>
+
+        <div class="token-card">
+            <p>YOUR APPOINTMENT TOKEN</p>
+            <h1>{{ token_number }}</h1>
+        </div>
+
+        <div class="appointment-details">
+            <div>
+                <span>Appointment Date</span>
+                <strong>{{ appointment_date }}</strong>
+            </div>
+
+            <div>
+                <span>Appointment Time</span>
+                <strong>{{ appointment_time }}</strong>
+            </div>
+        </div>
+
+        <p class="success-note">
+            Please keep your token number handy during your hospital visit.
+        </p>
+
+        <a href="/my-appointments" class="btn login-btn success-button">
+            View My Appointments →
+        </a>
+
+        <p class="back-home">
+            <a href="/patient-dashboard">← Back to Dashboard</a>
+        </p>
+
+        <p class="login-footer">
+            HealthBridge · Your Health, Our Priority
+        </p>
+
+    </div>
+</section>
+
+</body>
+</html>

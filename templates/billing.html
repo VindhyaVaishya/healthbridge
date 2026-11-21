@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/staff-dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">BILLING DEPARTMENT</p>
+            <h1>Hospital Billing</h1>
+            <p>Generate patient bills and manage payment records.</p>
+        </div>
+        <div class="dashboard-icon">🧾</div>
+    </div>
+
+    {% if error %}
+        <div class="billing-error">{{ error }}</div>
+    {% endif %}
+
+    <div class="billing-form-card">
+
+        <h2>Generate New Bill</h2>
+        <p class="availability-description">
+            Enter patient details and applicable charges.
+        </p>
+
+        <form method="POST" class="billing-form">
+
+            <div class="billing-field full-width">
+                <label>Patient ID</label>
+                <input type="text" name="patient_id"
+                       placeholder="Enter Patient ID" required>
+            </div>
+
+            <div class="billing-field">
+                <label>Consultation Charges (₹)</label>
+                <input type="number" name="consultation_charge"
+                       placeholder="Enter consultation charges"
+                       min="0" step="0.01" required>
+            </div>
+
+            <div class="billing-field">
+                <label>Lab Charges (₹)</label>
+                <input type="number" name="lab_charge"
+                       placeholder="Enter lab charges"
+                       min="0" step="0.01" value="0">
+            </div>
+
+            <div class="billing-field">
+                <label>Other Charges (₹)</label>
+                <input type="number" name="other_charge"
+                       placeholder="Enter other charges"
+                       min="0" step="0.01" value="0">
+            </div>
+
+            <div class="billing-field">
+                <label>Payment Status</label>
+                <select name="payment_status">
+                    <option value="Pending">Pending</option>
+                    <option value="Paid">Paid</option>
+                </select>
+            </div>
+
+            <div class="billing-submit full-width">
+                <button type="submit" class="login-btn">
+                    Generate Bill →
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="billing-history-section">
+
+        <div class="dashboard-heading">
+            <h2>Bill History</h2>
+            <p>Previously generated patient bills</p>
+        </div>
+
+        {% if bills %}
+
+        <div class="billing-table-wrapper">
+            <table class="billing-table">
+                <thead>
+                    <tr>
+                        <th>Bill ID</th>
+                        <th>Patient</th>
+                        <th>Patient ID</th>
+                        <th>Total Amount</th>
+                        <th>Payment Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for bill in bills %}
+                    <tr>
+                        <td>#{{ bill['id'] }}</td>
+                        <td><strong>{{ bill['patient_name'] }}</strong></td>
+                        <td>{{ bill['patient_id'] }}</td>
+                        <td class="bill-amount">
+                            ₹{{ "%.2f"|format(bill['total_amount']) }}
+                        </td>
+                        <td>
+                            <span class="bill-status">
+                                {{ bill['payment_status'] }}
+                            </span>
+                        </td>
+                        <td>{{ bill['created_at'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+
+        <div class="empty-queue">
+            <div class="feature-icon">🧾</div>
+            <h3>No Bills Generated</h3>
+            <p>Generated patient bills will appear here.</p>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="page-back-link">
+        <a href="/staff-dashboard">← Back to Dashboard</a>
+    </div>
+
+</section>
+
+</body>
+</html>

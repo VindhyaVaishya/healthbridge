@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/logout">Logout ↗</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">STAFF WORKSPACE</p>
+            <h1>Welcome, {{ staff_name }}!</h1>
+            <p>Thank you for being an important part of HealthBridge.</p>
+        </div>
+        <div class="dashboard-icon">👩‍⚕️</div>
+    </div>
+
+    <div class="doctor-profile">
+
+        <div class="profile-item">
+            <span>Staff Name</span>
+            <strong>{{ staff_name }}</strong>
+        </div>
+
+        <div class="profile-item">
+            <span>Staff ID</span>
+            <strong>{{ session['staff_id'] }}</strong>
+        </div>
+
+        <div class="profile-item">
+            <span>Department Role</span>
+            <strong>{{ staff_role }}</strong>
+        </div>
+
+    </div>
+
+    <div class="dashboard-heading">
+        <h2>Your Workspace</h2>
+        <p>Manage your daily hospital responsibilities</p>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-card">
+            <div class="feature-icon">💼</div>
+            <h3>My Responsibilities</h3>
+
+            {% if staff_role == "Nurse" %}
+                <p>Patient care and nursing assistance.</p>
+            {% elif staff_role == "Lab Technician" %}
+                <p>Laboratory tests and sample management.</p>
+            {% elif staff_role == "Receptionist" %}
+                <p>Patient registration and appointment assistance.</p>
+            {% elif staff_role == "Billing Staff" %}
+                <p>Patient billing and payment records.</p>
+            {% elif staff_role == "Ward Boy" %}
+                <p>Patient movement and ward assistance.</p>
+            {% else %}
+                <p>Hospital support and assigned duties.</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-card">
+            <div class="feature-icon">🕒</div>
+            <h3>Attendance</h3>
+            <p>Mark and view your daily attendance records.</p>
+            <a href="/staff-attendance">Mark Attendance →</a>
+        </div>
+
+        {% if staff_role == "Billing Staff" %}
+        <div class="dashboard-card">
+            <div class="feature-icon">💳</div>
+            <h3>Billing Management</h3>
+            <p>Generate patient bills and manage payment records.</p>
+            <a href="/billing">Open Billing →</a>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <div class="staff-footer">
+        <p>HealthBridge · Your Health, Our Priority</p>
+    </div>
+
+</section>
+
+</body>
+</html>

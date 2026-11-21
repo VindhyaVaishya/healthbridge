@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient History | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/doctor-dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">DOCTOR PORTAL</p>
+            <h1>Patient Records</h1>
+            <p>View the details of patients who have appointments with you.</p>
+        </div>
+        <div class="dashboard-icon">📁</div>
+    </div>
+
+    <div class="dashboard-heading">
+        <h2>Patient Directory</h2>
+        <p>Registered patient details</p>
+    </div>
+
+    {% if patients %}
+
+    <div class="patient-record-grid">
+
+        {% for patient in patients %}
+        <div class="patient-record-card">
+
+            <div class="patient-record-header">
+                <div class="patient-avatar">👤</div>
+                <div>
+                    <h3>{{ patient['name'] }}</h3>
+                    <span>Registered Patient</span>
+                </div>
+            </div>
+
+            <div class="patient-record-details">
+                <div>
+                    <span>Patient ID</span>
+                    <strong>{{ patient['patient_id'] }}</strong>
+                </div>
+
+                <div>
+                    <span>Mobile Number</span>
+                    <strong>{{ patient['mobile'] }}</strong>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-queue">
+        <div class="feature-icon">📂</div>
+        <h3>No Patient Records Found</h3>
+        <p>Patient records will appear here when appointments are booked.</p>
+    </div>
+
+    {% endif %}
+
+    <div class="page-back-link">
+        <a href="/doctor-dashboard">← Back to Dashboard</a>
+    </div>
+
+</section>
+
+</body>
+</html>

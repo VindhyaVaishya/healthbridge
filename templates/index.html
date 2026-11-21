@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthBridge | Hospital Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="home-page">
+
+    <nav class="navbar">
+        <div class="logo">HealthBridge<span>+</span></div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#services">Services</a>
+            <a href="#login">Login</a>
+            <a href="/hospital-map">Hospital Map</a>
+        </div>
+    </nav>
+
+    <section class="hero home-hero">
+        <div class="hero-content">
+            <span class="hero-tag">WELCOME TO HEALTHBRIDGE</span>
+
+            <h1>Your Health,<br>
+                <span>Our Priority.</span>
+            </h1>
+
+            <p>
+                Bringing doctors, hospital staff and patients
+                together through smarter healthcare management.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#login" class="btn">Explore Portals</a>
+                <a href="/hospital-map" class="hero-map-btn">Explore Hospital Map</a>
+            </div>
+
+            <div class="hero-note">
+                <span>✦</span> Better Care. Better Coordination. Better Health.
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-icon">✚</div>
+            <h3>Healthcare Made Simpler</h3>
+            <p>One platform for your hospital needs.</p>
+            <div class="hero-mini-tags">
+                <span>Doctors</span>
+                <span>Staff</span>
+                <span>Patients</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-services" id="services">
+        <div class="home-section-heading">
+            <span>OUR SERVICES</span>
+            <h2>Everything Connected in One Place</h2>
+            <p>A simple and organised way to manage hospital activities.</p>
+        </div>
+
+        <div class="service-highlights">
+            <div class="service-highlight">
+                <span>📅</span>
+                <h3>Appointments</h3>
+                <p>Book and manage doctor appointments.</p>
+            </div>
+
+            <div class="service-highlight">
+                <span>🩺</span>
+                <h3>Patient Care</h3>
+                <p>Access patient details and visit information.</p>
+            </div>
+
+            <div class="service-highlight">
+                <span>🏥</span>
+                <h3>Hospital Support</h3>
+                <p>Connect with hospital staff and departments.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section home-login-section" id="login">
+        <div class="home-section-heading">
+            <span>GET STARTED</span>
+            <h2>Choose Your Portal</h2>
+            <p>Login to continue to your HealthBridge dashboard.</p>
+        </div>
+
+        <div class="login-cards">
+
+            <div class="card home-portal-card">
+                <div class="portal-icon">🩺</div>
+                <h3>Doctor Portal</h3>
+                <p>Manage patient queues, appointments, availability and staff requests.</p>
+                <a href="/doctor-login">Doctor Login <span>→</span></a>
+            </div>
+
+            <div class="card home-portal-card">
+                <div class="portal-icon">👩‍⚕️</div>
+                <h3>Staff Portal</h3>
+                <p>Manage attendance, assigned duties and billing activities.</p>
+                <a href="/staff-login">Staff Login <span>→</span></a>
+            </div>
+
+            <div class="card home-portal-card">
+                <div class="portal-icon">💛</div>
+                <h3>Patient Portal</h3>
+                <p>Register, book appointments and view your appointment details.</p>
+                <a href="/patient-login">Patient Login <span>→</span></a>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="home-footer">
+        <div class="logo">HealthBridge<span>+</span></div>
+        <p>Connecting Care. Simplifying Healthcare.</p>
+        <span>© 2026 HealthBridge. All rights reserved.</span>
+    </footer>
+
+</body>
+</html>

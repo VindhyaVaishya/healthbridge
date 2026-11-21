@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .appointment-status {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-waiting {
+            background: #FFF0B8;
+            color: #8A6500;
+        }
+
+        .status-confirmed {
+            background: #DDF3DF;
+            color: #26743B;
+        }
+
+        .status-completed {
+            background: #E5E7EB;
+            color: #4B5563;
+        }
+
+        .status-cancelled {
+            background: #FCE1DF;
+            color: #B42318;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/patient-dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">PATIENT RECORDS</p>
+            <h1>My Appointments</h1>
+            <p>Keep track of your upcoming and previous visits.</p>
+        </div>
+        <div class="dashboard-icon">📅</div>
+    </div>
+
+    <!-- UPCOMING APPOINTMENTS -->
+
+    <div class="dashboard-heading">
+        <h2>Upcoming Appointments</h2>
+        <p>Your scheduled hospital visits</p>
+    </div>
+
+    {% if upcoming_appointments %}
+
+    <div class="appointment-list">
+
+        {% for appointment in upcoming_appointments %}
+
+        <div class="appointment-card">
+
+            <div class="appointment-card-header">
+                <div class="feature-icon">🩺</div>
+                <div>
+                    <h3>Dr. {{ appointment['full_name'] }}</h3>
+                    <p>{{ appointment['specialization'] }}</p>
+                </div>
+            </div>
+
+            <div class="appointment-info-grid">
+
+                <div>
+                    <span>Appointment Date</span>
+                    <strong>{{ appointment['appointment_date'] }}</strong>
+                </div>
+
+                <div>
+                    <span>Appointment Time</span>
+                    <strong>{{ appointment['appointment_time'] }}</strong>
+                </div>
+
+                <div>
+                    <span>Token Number</span>
+                    <strong>{{ appointment['token_number'] }}</strong>
+                </div>
+
+                <div>
+                    <span>Appointment Status</span>
+                    <strong>
+                        <span class="appointment-status
+                            {% if appointment['status'] == 'Waiting' %}status-waiting
+                            {% elif appointment['status'] == 'Confirmed' %}status-confirmed
+                            {% elif appointment['status'] == 'Completed' %}status-completed
+                            {% elif appointment['status'] == 'Cancelled' %}status-cancelled
+                            {% endif %}">
+                            {{ appointment['status'] }}
+                        </span>
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-appointments">
+        <div class="feature-icon">📭</div>
+        <h3>No Upcoming Appointments</h3>
+        <p>You currently have no upcoming visits.</p>
+        <a href="/book-appointment">Book Appointment →</a>
+    </div>
+
+    {% endif %}
+
+
+    <!-- PREVIOUS APPOINTMENTS -->
+
+    <div class="dashboard-heading">
+        <h2>Previous Appointments</h2>
+        <p>Your completed, cancelled and past visits</p>
+    </div>
+
+    {% if previous_appointments %}
+
+    <div class="appointment-list">
+
+        {% for appointment in previous_appointments %}
+
+        <div class="appointment-card">
+
+            <div class="appointment-card-header">
+                <div class="feature-icon">📋</div>
+                <div>
+                    <h3>Dr. {{ appointment['full_name'] }}</h3>
+                    <p>{{ appointment['specialization'] }}</p>
+                </div>
+            </div>
+
+            <div class="appointment-info-grid">
+
+                <div>
+                    <span>Appointment Date</span>
+                    <strong>{{ appointment['appointment_date'] }}</strong>
+                </div>
+
+                <div>
+                    <span>Appointment Time</span>
+                    <strong>{{ appointment['appointment_time'] }}</strong>
+                </div>
+
+                <div>
+                    <span>Token Number</span>
+                    <strong>{{ appointment['token_number'] }}</strong>
+                </div>
+
+                <div>
+                    <span>Appointment Status</span>
+                    <strong>
+                        <span class="appointment-status
+                            {% if appointment['status'] == 'Waiting' %}status-waiting
+                            {% elif appointment['status'] == 'Confirmed' %}status-confirmed
+                            {% elif appointment['status'] == 'Completed' %}status-completed
+                            {% elif appointment['status'] == 'Cancelled' %}status-cancelled
+                            {% endif %}">
+                            {{ appointment['status'] }}
+                        </span>
+                    </strong>
+                </div>
+
+            </div>
+
+<form method="POST"
+      action="{{ url_for('cancel_appointment', appointment_id=appointment['id']) }}"
+      onsubmit="return confirm('Are you sure you want to cancel this appointment?');">
+
+    <button type="submit"
+            style="background:#C94C4C; color:white; border:none;
+                   padding:10px 18px; border-radius:8px;
+                   cursor:pointer; margin-top:15px;">
+        Cancel Appointment
+    </button>
+
+</form>
+
+
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-appointments">
+        <div class="feature-icon">📋</div>
+        <h3>No Previous Appointments</h3>
+        <p>Your previous visits will appear here.</p>
+    </div>
+
+    {% endif %}
+
+    <div class="page-back-link">
+        <a href="/patient-dashboard">← Back to Dashboard</a>
+    </div>
+
+</section>
+
+</body>
+</html>

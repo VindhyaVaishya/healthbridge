@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Successful | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="registration-success-page">
+
+    <nav class="navbar">
+        <div class="logo">HealthBridge<span>+</span></div>
+    </nav>
+
+    <section class="success-wrapper">
+
+        <div class="success-card">
+
+            <div class="success-icon">✓</div>
+
+            <span class="success-label">ACCOUNT CREATED</span>
+
+            <h1>Registration Successful!</h1>
+
+            <p class="success-welcome">
+                Welcome to HealthBridge, <strong>{{ name }}</strong>.
+                Your patient account has been created successfully.
+            </p>
+
+            <div class="patient-id-box">
+                <p>Your Unique Patient ID</p>
+
+                <h2 id="patientId">{{ patient_id }}</h2>
+
+                <button type="button" class="copy-id-btn" onclick="copyPatientId()">
+                    Copy Patient ID
+                </button>
+            </div>
+
+            <div class="success-note">
+                <span>ℹ️</span>
+                <p>Please save your Patient ID. You will need it to log in to your account.</p>
+            </div>
+
+            <a href="/patient-login" class="success-login-btn">
+                Continue to Patient Login →
+            </a>
+
+            <a href="/" class="success-home-link">Back to Home</a>
+
+        </div>
+
+    </section>
+
+    <script>
+        function copyPatientId() {
+            const patientId = document.getElementById("patientId").innerText;
+
+            navigator.clipboard.writeText(patientId).then(function() {
+                const button = document.querySelector(".copy-id-btn");
+                button.innerText = "Copied!";
+                setTimeout(function() {
+                    button.innerText = "Copy Patient ID";
+                }, 2000);
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Patients | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/doctor-dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">DOCTOR PORTAL</p>
+            <h1>Today's Patient Queue</h1>
+            <p>View your scheduled patients and manage their tokens.</p>
+        </div>
+        <div class="dashboard-icon">🩺</div>
+    </div>
+
+    <div class="dashboard-heading">
+        <h2>Patient Appointments</h2>
+        <p>Today's appointment list</p>
+    </div>
+
+    {% if appointments %}
+
+    <div class="queue-table-wrapper">
+        <table class="queue-table">
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Patient ID</th>
+                    <th>Patient Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>
+                        <span class="token-number">
+                            #{{ appointment['token_number'] }}
+                        </span>
+                    </td>
+                    <td>{{ appointment['patient_id'] }}</td>
+                    <td><strong>{{ appointment['patient_name'] }}</strong></td>
+                    <td>
+                        <span class="status-label">
+                            {{ appointment['status'] }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+
+    <div class="empty-queue">
+        <div class="feature-icon">📋</div>
+        <h3>No Patients Scheduled</h3>
+        <p>You don't have any appointments scheduled for today.</p>
+    </div>
+
+    {% endif %}
+
+    <div class="page-back-link">
+        <a href="/doctor-dashboard">← Back to Dashboard</a>
+    </div>
+
+</section>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Availability | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/doctor-dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">DOCTOR PORTAL</p>
+            <h1>Manage Availability</h1>
+            <p>Set your available dates and appointment timings.</p>
+        </div>
+        <div class="dashboard-icon">🗓️</div>
+    </div>
+
+    <div class="availability-layout">
+
+        <div class="availability-form-card">
+            <h2>Add Appointment Slot</h2>
+            <p class="availability-description">
+                Select a date and time when patients can book appointments.
+            </p>
+
+            <form method="POST" action="/manage-availability">
+
+                <label>Select Date</label>
+                <input type="date" name="slot_date" required>
+
+                <label>Select Time</label>
+                <input type="time" name="slot_time" required>
+
+                <button type="submit" class="login-btn">
+                    + Add Time Slot
+                </button>
+
+            </form>
+        </div>
+
+        <div class="availability-slots-card">
+            <h2>Your Available Slots</h2>
+            <p class="availability-description">
+                Manage and review the slots you have added.
+            </p>
+
+            {% if slots %}
+
+                <div class="slot-list">
+                    {% for slot in slots %}
+
+                    <div class="slot-item">
+                        <div class="slot-date-icon">📅</div>
+
+                        <div class="slot-details">
+                            <strong>{{ slot['slot_date'] }}</strong>
+                            <span>{{ slot['slot_time'] }}</span>
+                        </div>
+
+                        <span class="slot-status">
+                            {{ slot['status'] }}
+                        </span>
+                    </div>
+
+                    {% endfor %}
+                </div>
+
+            {% else %}
+
+                <div class="empty-slots">
+                    <div class="feature-icon">⏰</div>
+                    <h3>No Slots Added</h3>
+                    <p>Your appointment slots will appear here.</p>
+                </div>
+
+            {% endif %}
+        </div>
+
+    </div>
+
+    <div class="page-back-link">
+        <a href="/doctor-dashboard">← Back to Dashboard</a>
+    </div>
+
+</section>
+
+</body>
+</html>

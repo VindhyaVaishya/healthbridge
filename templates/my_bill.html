@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bills | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .bill-card {
+            background: #FFF9E9;
+            border: 1px solid #E8C994;
+            border-radius: 15px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        .bill-card h3 {
+            color: #765638;
+        }
+
+        .bill-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 18px;
+            margin: 22px 0;
+        }
+
+        .bill-details span {
+            display: block;
+            color: #8B7355;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .bill-details strong {
+            color: #765638;
+        }
+
+        .bill-total {
+            border-top: 1px solid #E8C994;
+            padding-top: 15px;
+            color: #765638;
+            font-size: 20px;
+        }
+
+        .bill-download {
+            background: #D9A900;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .bill-status {
+            font-weight: bold;
+        }
+
+        @media print {
+            .navbar,
+            .page-back-link,
+            .bill-download {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            .bill-card {
+                break-inside: avoid;
+                border: 1px solid #aaa;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">HealthBridge+</div>
+    <div class="nav-links">
+        <a href="/patient-dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<section class="dashboard-container">
+
+    <div class="dashboard-welcome">
+        <div>
+            <p class="dashboard-label">PATIENT RECORDS</p>
+            <h1>My Bills</h1>
+            <p>View and download your hospital billing records.</p>
+        </div>
+        <div class="dashboard-icon">🧾</div>
+    </div>
+
+    <div class="dashboard-heading">
+        <h2>Billing History</h2>
+        <p>Your hospital charges and payment details</p>
+    </div>
+
+    {% if bills %}
+
+        {% for bill in bills %}
+
+        <div class="bill-card">
+
+            <h3>🏥 HealthBridge Hospital</h3>
+            <p>Bill ID: HB-BILL-{{ bill['id'] }}</p>
+            <p>Bill Date: {{ bill['created_at'] }}</p>
+
+            <div class="bill-details">
+
+                <div>
+                    <span>Consultation Charge</span>
+                    <strong>₹{{ "%.2f"|format(bill['consultation_charge']) }}</strong>
+                </div>
+
+                <div>
+                    <span>Laboratory Charge</span>
+                    <strong>₹{{ "%.2f"|format(bill['lab_charge']) }}</strong>
+                </div>
+
+                <div>
+                    <span>Other Charges</span>
+                    <strong>₹{{ "%.2f"|format(bill['other_charge']) }}</strong>
+                </div>
+
+                <div>
+                    <span>Payment Status</span>
+                    <strong class="bill-status">
+                        {{ bill['payment_status'] }}
+                    </strong>
+                </div>
+
+            </div>
+
+            <div class="bill-total">
+                **Total Amount: ₹{{ "%.2f"|format(bill['total_amount']) }}**
+            </div>
+
+            <button class="bill-download" onclick="window.print()">
+                Download / Print Bill
+            </button>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty-appointments">
+            <div class="feature-icon">🧾</div>
+            <h3>No Bills Available</h3>
+            <p>Your generated hospital bills will appear here.</p>
+        </div>
+
+    {% endif %}
+
+    <div class="page-back-link">
+        <a href="/patient-dashboard">← Back to Dashboard</a>
+    </div>
+
+</section>
+
+</body>
+</html>

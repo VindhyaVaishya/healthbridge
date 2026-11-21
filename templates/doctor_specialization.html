@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Profile | HealthBridge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<section class="login-container">
+    <div class="login-box">
+
+        <h2>Complete Your Doctor Profile</h2>
+        <p>Please confirm your name and select your specialization.</p>
+
+        <form method="POST" action="/doctor-specialization">
+
+            <input type="text"
+                   name="doctor_name"
+                   placeholder="Full Name"
+                   value="{{ doctor['full_name'] }}"
+                   required>
+
+            <br><br>
+
+            <select name="specialization" required>
+                <option value="">Select Specialization</option>
+                <option>General Physician</option>
+                <option>Surgeon</option>
+                <option>Cardiologist</option>
+                <option>Neurologist</option>
+                <option>Orthopedic</option>
+                <option>Gynecologist</option>
+                <option>Pediatrician</option>
+                <option>Dermatologist</option>
+                <option>Dentist</option>
+                <option>Ophthalmologist</option>
+                <option>ENT Specialist</option>
+                <option>Other</option>
+            </select>
+
+            <br><br>
+
+            <button type="submit" class="btn">
+                Save Profile
+            </button>
+
+        </form>
+
+    </div>
+</section>
+
+</body>
+</html>
